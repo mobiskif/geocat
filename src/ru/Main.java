@@ -1,27 +1,33 @@
 package ru;
 
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
-    String group[] = {"sb2b", "sb2c", "tb2b", "tb2c"};
-    String reg[] = {"group", "email", "bill", "pass", "dpay"};
-    String list[] = {"group", "ip", "lng", "lat"};
-    String s_commands[] = {"group", "reg", "list", "join"};
-    String c_commands[] = {"list", "serv"};
-
+    String domain[] = {"b2b", "b2c", "c2b", "c2c", "g2g", "g2c", "g2b", "c2g", "b2g"};
+    String group[] = {"service", "market", "education", "health"};
+    String reg[] = {"domain", "group", "email", "bill", "pass", "dpay"};
+    String list[] = {"domain", "group", "ip", "w", "h"};
+    String s_commands[] = {"list_domain", "list_group", "reg", "join", "off"};
+    String c_commands[] = {"list", "get"};
+    static Map s_help;
+    static Map c_help;
 
     public static void main(String[] args) {
-        Map<String, String> hashmap0 = new HashMap<String, String>() {{
-            put("a", "b");
-            put("aa", "bb");
+        s_help = new HashMap () {{
+            put("list_d", "Список доменов");
+            put("list_g", "Список групп");
+            put("list [domain.group] [w0, h0, w1, h1]", "Список серверов в группе в квадрате");
+            put("reg", "Зарегистрировать поставщика услуг в домене.группе. Синтаксис: reg test@mail.ru b2c.health [w,h]");
+            put("join", "Опубликовать сервер ранее зарегистрированного поставщика в домене.группе до 23:59 СЕТ (ip сервера из хедера). Синтаксис: join test@mail.ru:password b2b.market. Если не указано, координаты по ip");
+            put("off", "Прекратить публикацию сервера");
         }};
 
-        Map<String, String[]> hashmap1 = new HashMap<String, String[]>();
-        hashmap1.put("k1.1", new String[]{"1", "2", "3"});
-        hashmap1.put("k1.2", new String[]{"11", "22", "33", "44"});
+        c_help = new HashMap () {{
+            put("list", "Список услуг сервера");
+            put("get service [params]", "Получить услугу");
 
+        }};
 
 /*
         for (Map.Entry<String, String[]> entry : hashmap.entrySet())
@@ -35,20 +41,12 @@ public class Main {
             System.out.println(itr.next());
 */
 
-        Map<String, Map> hashmap2 = new HashMap();
-        hashmap2.put("k2.1", hashmap0);
-        hashmap2.put("k2.2", hashmap1);
-        hashmap2.put("k2.3", hashmap1);
 
-        Map<String, Map> hashmap3 = new HashMap();
-        hashmap3.put("k3.1", hashmap2);
-        hashmap3.put("k3.2", hashmap2);
+        //System.out.println(fill(new ArrayList()));
+        //System.out.println(fill(new HashSet()));
+        //System.out.println(fill(new HashMap()));
 
-        System.out.println(hashmap1);
-
-        System.out.println(fill(new ArrayList()));
-        System.out.println(fill(new HashSet()));
-        System.out.println(fill(new HashMap()));
+        help("join");
 
     }
 
@@ -65,27 +63,9 @@ public class Main {
         m.put("cat", "Rags");
         return m;
     }
-
-    static String printarr(String[] arr) {
-        String s = "{";
-        for (String elem : arr) {
-            //System.out.println(elem);
-            if (s == "{") s += elem;
-            else s += ", " + elem;
-        }
-        return s + "}\n";
-    }
-
-    static String printmap(Map<String, Map> arr) {
-        String ss = "\n";
-        for (Map.Entry entry : arr.entrySet()) {
-            if (entry.getValue().getClass().isMemberClass())
-                ss = ss + entry.getKey() + " = " + printmap((Map) entry.getValue());
-            else if (entry.getValue().getClass().isArray())
-                ss = ss + "\t" + entry.getKey() + " = " + printarr((String[]) entry.getValue());
-            else ss = ss + entry.getValue() + "\n";
-        }
-        return ss + "";
+    static void help(String command) {
+        String s = (c_help.get(command)==null) ? s_help.get(command).toString() : c_help.get(command).toString();
+        System.out.println(s);
     }
 
 }
