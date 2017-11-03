@@ -92,7 +92,7 @@ public class t {
         return r;
     }
 
-    static String s_request(String s) {
+    static String s(String s) {
         String r = "";
         String[] c = s.split(" ");
         String arg = "";
