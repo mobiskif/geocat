@@ -9,26 +9,21 @@ public class t {
     static String group[] = {"service", "market", "education", "health"};
     static String reg[] = {"domain", "group", "email", "bill", "pass", "dpay"};
     static String list[] = {"domain", "group", "ip", "w", "h"};
-    static String s_commands[] = {"list_domain", "list_group", "reg", "join", "off"};
-    static String c_commands[] = {"list", "get"};
-    static Map s_help;
-    static Map c_help;
+    static String commands[] = {"list_domain", "list_group", "reg", "join", "off", "list", "get"};
+    static Map helps;
 
     static void init() {
-        s_help = new HashMap() {{
+        helps = new HashMap() {{
             put("list_d", "Список доменов");
             put("list_g", "Список групп");
             put("list_s", "Список серверов в группе в квадрате. \nСинтаксис: list_s [domain.group] [w0, h0, w1, h1]");
             put("reg", "Зарегистрировать поставщика услуг в домене.группе. \nСинтаксис: reg test@mail.ru b2c.health [w,h]");
             put("join", "Опубликовать сервер ранее зарегистрированного поставщика в домене.группе до 23:59 СЕТ (ip сервера из хедера). \nСинтаксис: join test@mail.ru:password [b2b.market]. Если не указано, координаты по ip");
             put("off", "Прекратить публикацию сервера");
-        }};
-
-        c_help = new HashMap() {{
             put("list", "Список услуг сервера");
             put("get service [params]", "Получить услугу");
-
         }};
+
 
 /*
         for (Map.Entry<String, String[]> entry : hashmap.entrySet())
@@ -62,8 +57,7 @@ public class t {
     }
     static String help(String command) {
         init();
-        String s = (c_help.get(command)==null) ? ""+s_help.get(command) : ""+c_help.get(command);
-        return s;
+        return (String) helps.get(command);
     }
     static String list_g(String command) {
         init();
@@ -92,9 +86,9 @@ public class t {
         return r;
     }
 
-    static String s(String s) {
+    static String s(String ss) {
         String r = "";
-        String[] c = s.split(" ");
+        String[] c = ss.split(" ");
         String arg = "";
 
         for (int i=1; i<c.length; i++) arg+=" "+c[i];
