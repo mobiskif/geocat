@@ -1,6 +1,6 @@
 package ru;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,9 +8,10 @@ public class t {
     static String domain[] = {"b2b", "b2c", "c2b", "c2c", "g2g", "g2c", "g2b", "c2g", "b2g"};
     static String group[] = {"service", "market", "education", "health"};
     static String reg[] = {"domain", "group", "email", "bill", "pass", "dpay"};
-    static String list[] = {"domain", "group", "ip", "w", "h"};
-    static String commands[] = {"list_domain", "list_group", "reg", "join", "off", "list", "get"};
+    static String list_h[] = {"domain", "group", "ip", "w", "h"};
+    static String commands[] = {"list_domain", "list_group", "reg", "join", "off", "list_h", "get"};
     static Map helps;
+    static ArrayList<String[]> list = new ArrayList();
 
     static void init() {
         helps = new HashMap() {{
@@ -20,28 +21,23 @@ public class t {
             put("reg", "Зарегистрировать поставщика услуг в домене.группе. \nСинтаксис: reg test@mail.ru b2c.health [w,h]");
             put("join", "Опубликовать сервер ранее зарегистрированного поставщика в домене.группе до 23:59 СЕТ (ip сервера из хедера). \nСинтаксис: join test@mail.ru:password [b2b.market]. Если не указано, координаты по ip");
             put("off", "Прекратить публикацию сервера");
-            put("list", "Список услуг сервера");
+            put("list_h", "Список услуг сервера");
             put("get service [params]", "Получить услугу");
         }};
 
-
+    }
 /*
-        for (Map.Entry<String, String[]> entry : hashmap.entrySet())
-            System.out.println(entry.getKey() + " = " + printarr(entry.getValue()));
-
-        for (String key: hashmap.keySet())
-            System.out.println(hashmap.get(key));
+        for (Map.Entry<String, String[]> entry : hashmap.entrySet()) System.out.println(entry.getKey() + " = " + printarr(entry.getValue()));
+        for (String key: hashmap.keySet()) System.out.println(hashmap.get(key));
 
         Iterator<Map.Entry<String, String[]>> itr = hashmap.entrySet().iterator();
-        while (itr.hasNext())
-            System.out.println(itr.next());
+        while (itr.hasNext()) System.out.println(itr.next());
 
         System.out.println(fill(new ArrayList()));
         System.out.println(fill(new HashSet()));
         System.out.println(fill(new HashMap()));
-*/
 
-    }
+
     static Collection fill(Collection c) {
         c.add("dog");
         c.add("dog");
@@ -55,19 +51,11 @@ public class t {
         m.put("cat", "Rags");
         return m;
     }
+*/
+
     static String help(String command) {
         init();
         return (String) helps.get(command);
-    }
-    static String list_g(String command) {
-        init();
-        String s = domain.toString();
-        return s;
-    }
-
-    static String c_request(String s) {
-        System.out.println(help(s));
-        return "Ok";
     }
 
     static String list_g() {
@@ -82,7 +70,7 @@ public class t {
     }
     static String list_s() {
         String r ="";
-        for (String s:list) r+=s+" ";
+        for (String s: list_h) r+=s+" ";
         return r;
     }
 
@@ -102,6 +90,21 @@ public class t {
 
         System.out.println(r);
         return r;
+    }
+    static void reg( String mail, String group) {
+        list.add(new String[]{mail, group, " ", " "});
+    }
+
+    static void printarr(ArrayList<String[]> s) {
+        for (String[] arr:s
+             ) {
+            String res="";
+            for (int i = 0; i < arr.length; i++) {
+                res+=arr[i]+" ";
+            }
+            System.out.println(res);
+        }
+
     }
 
 
