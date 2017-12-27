@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class t {
-    static String domain[] = {"b2b", "b2c", "c2b", "c2c", "g2g", "g2c", "g2b", "c2g", "b2g"};
-    static String group[] = {"service", "market", "education", "health"};
-    static String reg[] = {"domain", "group", "email", "bill", "pass", "dpay"};
-    static String list_h[] = {"domain", "group", "ip", "w", "h"};
+    static String domains[] = {"b2b", "b2c", "c2b", "c2c", "g2g", "g2c", "g2b", "c2g", "b2g"};
+    static String groups[] = {"service", "market", "education", "health"};
+    static String regs[] = {"domain", "group", "email", "bill", "pass", "dpay"};
+    static String servers[] = {"email", "ip", "w", "h", "time"};
     static String commands[] = {"list_domain", "list_group", "reg", "join", "off", "list_h", "get"};
     static Map helps;
-    static ArrayList<String[]> list = new ArrayList();
+    static ArrayList<String[]> reg = new ArrayList();
 
     static void init() {
         helps = new HashMap() {{
@@ -53,24 +53,15 @@ public class t {
     }
 */
 
-    static String help(String command) {
+    public static String help(String command) {
         init();
         return (String) helps.get(command);
     }
 
-    static String list_g() {
+    static String list_() {
         String r ="";
-        for (String s:group) r+="\n"+s;
-        return r;
-    }
-    static String list_d() {
-        String r ="";
-        for (String s:domain) r+="\n"+s;
-        return r;
-    }
-    static String list_s() {
-        String r ="";
-        for (String s: list_h) r+=s+" ";
+        //for (String s: reg) r+=s+"\t";
+        //r+="\n"+printarr(list);
         return r;
     }
 
@@ -83,28 +74,27 @@ public class t {
 
         switch (c[0]) {
             case "help": r = "\n"+c[1] + " = " + help(c[1]); break;
-            case "list_g": r = "\n" + list_g(); break;
-            case "list_d": r = "\n" + list_d(); break;
-            case "list_s": r = "\n" + list_s(); break;
+            case "list": r = "\n"+c[1] + " = " + printarr(c[1]); break;
         };
 
         System.out.println(r);
         return r;
     }
-    static void reg( String mail, String group) {
-        list.add(new String[]{mail, group, " ", " "});
+    public static void reg(String mail, String group) {
+        reg.add(new String[]{mail, group, " ", " "});
     }
 
-    static void printarr(ArrayList<String[]> s) {
-        for (String[] arr:s
-             ) {
-            String res="";
-            for (int i = 0; i < arr.length; i++) {
-                res+=arr[i]+" ";
-            }
-            System.out.println(res);
+    static String printarr(String s) {
+        ArrayList<String[]> arrayList=null;
+        switch (s) {
+            case "reg": arrayList = reg; break;
         }
-
+        String result="";
+        for (String[] arr:arrayList) {
+            for (int i = 0; i < arr.length; i++) result+=arr[i]+"\t";
+            result+="\n";
+        }
+        return result;
     }
 
 
